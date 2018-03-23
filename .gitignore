@@ -1,6 +1,8 @@
 # Eclipse
 .metadata/
 .settings/
+.myeclipse/
+.externalToolBuilders/
 bin/
 tmp/
 *.tmp
