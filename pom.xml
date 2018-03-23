@@ -230,7 +230,7 @@
 	</build>
 	<modules>
 		<module>coos.core</module>
-		<module>coos.web.core</module>
 		<module>coos.web.resource</module>
+		<module>coos.web.core</module>
 	</modules>
 </project>
