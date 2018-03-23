@@ -5,7 +5,7 @@
 	<groupId>top.coos</groupId>
 	<artifactId>coos</artifactId>
 	<version>1.0</version>
-	<name>top.coos</name>
+	<name>coos</name>
 	<url>http://coos.top</url>
 	<packaging>pom</packaging>
 	<properties>
