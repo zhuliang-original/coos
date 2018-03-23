@@ -13,6 +13,11 @@
 	<dependencies>
 		<dependency>
 			<groupId>top.coos</groupId>
+			<artifactId>coos.core</artifactId>
+			<version>${coos.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>top.coos</groupId>
 			<artifactId>coos.web.resource</artifactId>
 			<version>${coos.version}</version>
 		</dependency>
