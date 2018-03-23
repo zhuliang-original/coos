@@ -5,6 +5,8 @@
 	<groupId>top.coos</groupId>
 	<artifactId>coos</artifactId>
 	<version>1.0</version>
+	<name>top.coos</name>
+	<url>http://coos.top</url>
 	<packaging>pom</packaging>
 	<properties>
 		<coos.version>1.0</coos.version>
@@ -15,6 +17,30 @@
 		<!-- 编译时的编码 -->
 		<maven.compiler.encoding>UTF-8</maven.compiler.encoding>
 	</properties>
+	<licenses>
+		<license>
+			<name>The Apache Software License, Version 2.0</name>
+			<url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+			<distribution>repo</distribution>
+		</license>
+	</licenses>
+	<scm>
+		<url>http://coos.top</url>
+		<connection>https://github.com/coosx/coos.git</connection>
+		<developerConnection>https://github.com/coosx/coos</developerConnection>
+	</scm><!-- 配置远程发布到私服，mvn deploy -->
+	<distributionManagement>
+		<repository>
+			<id>sonatype-nexus-release</id>
+			<name>Nexus Release Repository</name>
+			<url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
+		</repository>
+		<snapshotRepository>
+			<id>sonatype-nexus-snapshots</id>
+			<name>Nexus Snapshot Repository</name>
+			<url>https://oss.sonatype.org/content/repositories/snapshots/</url>
+		</snapshotRepository>
+	</distributionManagement>
 	<dependencies>
 		<dependency>
 			<groupId>javax.websocket</groupId>
