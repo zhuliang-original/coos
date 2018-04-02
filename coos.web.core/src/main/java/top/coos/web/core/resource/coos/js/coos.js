@@ -5735,6 +5735,13 @@ String.prototype.replaceAll = function(arg1, arg2) {
 				value += $(one).attr('value') + ',';
 			});
 			$selector.val(value);
+			if (co.isEmpty(value)) {
+				$(optionGroup.find('.coos-text-tag')).each(function(index, one) {
+					if (co.isEmpty($(one).attr('value'))) {
+						$(one).addClass('active');
+					}
+				});
+			}
 			isFullChange = false;
 			$selector.change();
 			isFullChange = true;
@@ -6632,6 +6639,13 @@ String.prototype.replaceAll = function(arg1, arg2) {
 				value += $(one).attr('value');
 			});
 			$selector.val(value);
+			if (co.isEmpty(value)) {
+				$(optionGroup.find('.coos-text-tag')).each(function(index, one) {
+					if (co.isEmpty($(one).attr('value'))) {
+						$(one).addClass('active');
+					}
+				});
+			}
 			isFullChange = false;
 			$selector.change();
 			isFullChange = true;
@@ -7262,6 +7276,7 @@ String.prototype.replaceAll = function(arg1, arg2) {
 		this.initView();
 		this.initDatas();
 		this.bindWindowEvent();
+		this.binValueEvent();
 		this.binTextEvent();
 
 		// 组合级联菜单
@@ -7345,6 +7360,16 @@ String.prototype.replaceAll = function(arg1, arg2) {
 		}
 	};
 
+	SelectBind.prototype.binValueEvent = function() {
+		var this_ = this;
+		if (this.$value && this.$text) {
+			var selecting = false;
+			this.$value.change(function() {
+				var value = $(this).val();
+				this_.setValue(value);
+			});
+		}
+	};
 	SelectBind.prototype.binTextEvent = function() {
 		var this_ = this;
 		if (this.$text) {
@@ -7353,7 +7378,6 @@ String.prototype.replaceAll = function(arg1, arg2) {
 
 				// 去除不完整的TEXT
 				var text = $(this).val();
-
 				var value = getValueByText(text, this_.$select, this_.ismulti);
 				this_.setValue(value);
 			});
@@ -7378,11 +7402,9 @@ String.prototype.replaceAll = function(arg1, arg2) {
 						}
 						var value = ui.item.value || "";
 						if (this_.ismulti) {
-							var valueterms = split(this_.$text.data('bind-value'));
-							valueterms.pop();
-							valueterms.push(ui.item.value);
-							valueterms.push("");
-							value = valueterms.join(",");
+							var text = ui.item.text || "";
+							text = this_.$text.val() + "," + text;
+							value = getValueByText(text, this_.$select, this_.ismulti);
 						} else {
 						}
 						this_.setValue(value, true);
@@ -7397,7 +7419,6 @@ String.prototype.replaceAll = function(arg1, arg2) {
 			});
 		}
 	};
-
 	SelectBind.prototype.initDatas = function() {
 		this.datas = getSelectOptionDatas(this.$select);
 		var this_ = this;
