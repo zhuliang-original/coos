@@ -49,8 +49,21 @@ public class PermissionMenu extends Support {
 	@Column(name = "remark", comment = "备注", maxlength = 500)
 	private String remark;
 
+	@Column(name = "notonline", comment = "未上线", inputType = InputType.SWITCH)
+	private boolean notonline;
+
 	@Column(name = "createtime", comment = "创建时间", inputType = InputType.DATETIME)
 	private String createtime;
+
+	public boolean isNotonline() {
+
+		return notonline;
+	}
+
+	public void setNotonline(boolean notonline) {
+
+		this.notonline = notonline;
+	}
 
 	public String getProjectid() {
 

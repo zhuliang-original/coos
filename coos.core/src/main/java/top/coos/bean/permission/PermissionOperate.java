@@ -58,6 +58,9 @@ public class PermissionOperate extends Support {
 	@Column(name = "shouldauthorize", comment = "需要授权", inputType = InputType.SWITCH)
 	private boolean shouldauthorize;
 
+	@Column(name = "notonline", comment = "未上线", inputType = InputType.SWITCH)
+	private boolean notonline;
+
 	@Column(name = "sequence", comment = "顺序号", inputType = InputType.NUMBER)
 	private Integer sequence;
 
@@ -66,6 +69,16 @@ public class PermissionOperate extends Support {
 
 	@Column(name = "createtime", comment = "创建时间", inputType = InputType.DATETIME)
 	private String createtime;
+
+	public boolean isNotonline() {
+
+		return notonline;
+	}
+
+	public void setNotonline(boolean notonline) {
+
+		this.notonline = notonline;
+	}
 
 	public String getProjectid() {
 

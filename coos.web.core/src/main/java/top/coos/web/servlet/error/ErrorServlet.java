@@ -38,6 +38,7 @@ public class ErrorServlet extends DefaultServlet {
 		return WebConstant.Page.WEB_INF_VIEW_CORE_PUBLIC_JSP;
 	}
 
+
 	@RequestMapping("/toNotFindConfig.do")
 	public String toNotFindConfig(HttpServletRequest request, ModelMap map) {
 
