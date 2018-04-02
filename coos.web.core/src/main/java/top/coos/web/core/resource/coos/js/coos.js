@@ -1434,8 +1434,7 @@ co.resource.images = {
 			js : [ "resource/plugins/bootstrap/switch/bootstrap-switch.min.js" ],
 			css : [ "resource/plugins/bootstrap/switch/bootstrap-switch.css" ]
 		},
-		data_tables :
-		{
+		data_tables : {
 			js : [ "resource/plugins/jquery/datatables/jquery.datatables.min.js", "resource/plugins/jquery/datatables/datatables.bootstrap.js" ],
 			css : [ "resource/plugins/jquery/datatables/css/datatables.bootstrap.css", "resource/plugins/jquery/datatables/css/jquery.datatables.css" ]
 		},
@@ -1494,16 +1493,20 @@ co.resource.images = {
 			css : []
 		},
 		chartist : {
-			js : [ "resource/plugins/chartist/chartist.min.js"],
+			js : [ "resource/plugins/chartist/chartist.min.js" ],
 			css : [ "resource/plugins/chartist/chartist.min.css" ]
 		},
 		loaders : {
-			js : [ ],
+			js : [],
 			css : [ "resource/plugins/loaders/loaders.min.css" ]
 		},
 		flot : {
-			js : [ "resource/plugins/flot/jquery.flot.js"],
-			css : [ ]
+			js : [ "resource/plugins/flot/jquery.flot.js" ],
+			css : []
+		},
+		flot_pie : {
+			js : [ "resource/plugins/flot/jquery.flot.js", "resource/plugins/flot/jquery.flot.pie.js" ],
+			css : []
 		}
 	};
 
