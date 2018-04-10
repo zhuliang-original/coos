@@ -36,30 +36,39 @@ public class WebResourcesCopyTool {
 
 	public static void copyByPath(HttpServletRequest request, String packagepath) throws CoreException {
 
-		copyByPath(request, packagepath, Constant.Class.CLASS_LOADER);
+		copyByPath(request, packagepath, Constant.Class.CLASS_LOADER, null);
 	}
 
-	public static void copyByPath(HttpServletRequest request, String packagepath, ClassLoader classLoader)
+	public static void copyByPath(HttpServletRequest request, String packagepath, ClassLoader classLoader, JarFile jar)
 			throws CoreException {
 
 		// System.out.println("copyByPath:" + packagepath);
 		String resourcepath = getPath(packagepath + "/resource", classLoader);
 		if (!StringHelper.isEmpty(resourcepath)) {
-			copy(resourcepath, packagepath + "/resource", WebConstant.Path.getWebServerResourcePath(request));
+			copy(resourcepath, packagepath + "/resource", WebConstant.Path.getWebServerResourcePath(request), jar);
 		}
 		String viewspath = getPath(packagepath + "/views", classLoader);
 
 		if (!StringHelper.isEmpty(viewspath)) {
-			copy(viewspath, packagepath + "/views", WebConstant.Path.getWebServerViewPath(request));
+			copy(viewspath, packagepath + "/views", WebConstant.Path.getWebServerViewPath(request), jar);
 		}
 	}
 
 	public static void copy(String path, String packagepath, String topath) throws CoreException {
 
+		copy(path, packagepath, topath, null);
+	}
+
+	public static void copy(String path, String packagepath, String topath, JarFile jar) throws CoreException {
+
 		try {
-			if (new File(path).getName().indexOf(".jar") > 0) {
+			if (jar != null || new File(path).getName().indexOf(".jar") > 0) {
 				String jarPath = path;
-				jarFile = new JarFile(jarPath);
+				if (jar != null) {
+					jarFile = jar;
+				} else {
+					jarFile = new JarFile(jarPath);
+				}
 				Enumeration<JarEntry> es = jarFile.entries();
 				while (es.hasMoreElements()) {
 					JarEntry e = es.nextElement();
@@ -68,9 +77,9 @@ public class WebResourcesCopyTool {
 					} else {
 						if (name.indexOf(packagepath) == 0) {
 							File pagefile = new File(topath + "/" + (name.replace(packagepath, "")));
-							InputStream stream = Constant.Class.CLASS_LOADER.getResourceAsStream(name);
+							InputStream stream = jarFile.getInputStream(e);
+
 							byte[] bytes = FileTool.readBytes(stream);
-							stream.close();
 							if (bytes == null || bytes.length < 1) {
 								continue;
 							}
