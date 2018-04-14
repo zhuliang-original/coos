@@ -27,7 +27,6 @@ public class DefaultServletHandler {
 		if (request.getAttribute("SERVLET_SERVICE_EXECUTE") != null) {
 			return;
 		}
-
 		ServletContext context = request.getServletContext();
 		String servletpath = RequestTool.getServletpath(request);
 		Map<String, ?> registration_map = context.getServletRegistrations();
