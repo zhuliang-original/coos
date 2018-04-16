@@ -2,7 +2,7 @@ package top.coos.proxy;
 
 import org.slf4j.Logger;
 
-import top.coos.logger.CoreLoggerFactory;
+import top.coos.logger.LoggerFactory;
 import io.netty.bootstrap.Bootstrap;
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.ChannelInitializer;
@@ -14,7 +14,7 @@ import io.netty.channel.socket.nio.NioSocketChannel;
 public class ProxyServer {
 
 	public static ProxyServer server = new ProxyServer();
-	Logger logger = CoreLoggerFactory.get();
+	Logger logger = LoggerFactory.get();
 
 	public Object lock = new Object();
 

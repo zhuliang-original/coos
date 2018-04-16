@@ -2,12 +2,12 @@ package top.coos.tool.type;
 
 import org.slf4j.Logger;
 
-import top.coos.logger.CoreLoggerFactory;
+import top.coos.logger.LoggerFactory;
 
 
 public class TypeTool {
 
-    private static Logger logger = CoreLoggerFactory.get();
+    private static Logger logger = LoggerFactory.get();
 
     public static Boolean parseBoolean(Object value) {
         if (value != null) {

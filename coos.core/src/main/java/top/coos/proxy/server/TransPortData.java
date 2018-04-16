@@ -6,11 +6,11 @@ import java.net.Socket;
 
 import org.slf4j.Logger;
 
-import top.coos.logger.CoreLoggerFactory;
+import top.coos.logger.LoggerFactory;
 
 public class TransPortData extends Thread {
 
-	private transient static Logger logger = CoreLoggerFactory.get();
+	private transient static Logger logger = LoggerFactory.get();
 
 	Socket getDataSocket;
 	Socket putDataSocket;

@@ -11,11 +11,11 @@ import java.util.zip.ZipOutputStream;
 
 import org.slf4j.Logger;
 
-import top.coos.logger.CoreLoggerFactory;
+import top.coos.logger.LoggerFactory;
 
 public class ZipTool {
 
-	static Logger logger = CoreLoggerFactory.get();
+	static Logger logger = LoggerFactory.get();
 
 	static final int BUFFER = 8192;
 

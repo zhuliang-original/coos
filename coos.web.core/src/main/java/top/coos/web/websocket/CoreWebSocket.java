@@ -5,7 +5,7 @@ import javax.websocket.server.ServerEndpoint;
 import org.slf4j.Logger;
 
 import net.sf.json.JSONObject;
-import top.coos.logger.CoreLoggerFactory;
+import top.coos.logger.LoggerFactory;
 import top.coos.tool.string.StringHelper;
 import top.coos.web.cache.WebSocketListenerCache;
 import top.coos.websocket.DefaultWebSocket;
@@ -13,7 +13,7 @@ import top.coos.websocket.DefaultWebSocket;
 @ServerEndpoint("/core/websocket")
 public class CoreWebSocket extends DefaultWebSocket {
 
-	static Logger logger = CoreLoggerFactory.get();
+	static Logger logger = LoggerFactory.get();
 
 	@Override
 	protected void onMessage(String message) {

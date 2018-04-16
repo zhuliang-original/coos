@@ -1,13 +1,12 @@
 package top.coos.logger;
 
-import org.slf4j.Logger;
 import org.slf4j.Marker;
 
-public class CoreLogger implements Logger {
+public class Logger implements org.slf4j.Logger {
 
-	private Logger logger;
+	private org.slf4j.Logger logger;
 
-	public CoreLogger(Logger logger) {
+	public Logger(org.slf4j.Logger logger) {
 
 		this.logger = logger;
 	}

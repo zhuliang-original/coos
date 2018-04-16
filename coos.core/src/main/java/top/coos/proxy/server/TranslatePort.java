@@ -10,12 +10,12 @@ import net.sf.json.JSONObject;
 
 import org.slf4j.Logger;
 
-import top.coos.logger.CoreLoggerFactory;
+import top.coos.logger.LoggerFactory;
 import top.coos.proxy.HostMapping;
 
 public class TranslatePort {
 
-	private transient static Logger logger = CoreLoggerFactory.get();
+	private transient static Logger logger = LoggerFactory.get();
 
 	private static ServerSocket serverSocket;
 	private static Map<String, HostMapping> host_map = new HashMap<String, HostMapping>();

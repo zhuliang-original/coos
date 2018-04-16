@@ -5,7 +5,7 @@ import java.util.Map;
 
 import org.slf4j.Logger;
 
-import top.coos.logger.CoreLoggerFactory;
+import top.coos.logger.LoggerFactory;
 import io.netty.bootstrap.Bootstrap;
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.Channel;
@@ -20,7 +20,7 @@ import io.netty.channel.SimpleChannelInboundHandler;
  */
 public class ServerChannelHandler extends SimpleChannelInboundHandler<ByteBuf> {
 
-	Logger logger = CoreLoggerFactory.get();
+	Logger logger = LoggerFactory.get();
 
 	private Bootstrap realServerBootstrap;
 	private Map<String, HostMapping> host_map = new HashMap<String, HostMapping>();
