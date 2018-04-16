@@ -1,48 +1,29 @@
 package top.coos.tool.sql;
 
 import java.util.Map;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
 import top.coos.exception.CoreException;
-import top.coos.tool.value.ValueTool;
+import top.coos.tool.value.ValueResolver;
 
 public class SqlTool {
 
-    public static StringBuffer formatSqlAndParam(StringBuffer sqlBuffer, Map<String, Object> paramMap, Map<String, String> requestmap, Map<String, Object> cachedata) throws CoreException {
-        String sql = sqlBuffer.toString();
-        String newSql = sqlBuffer.toString();
-        Pattern pattern = Pattern.compile("(:data\\{)[^\\}]+(\\})");
-        Matcher matcher = pattern.matcher(sql);
-        while (matcher.find()) {
-            String param = matcher.group();
-            param = param.replaceAll("\\{", "").replaceAll("\\}", "").replaceAll(":data", "");
-            String setParam = param;
-            String value = ValueTool.getValue(param, requestmap, cachedata);
+	public static StringBuffer formatSqlAndParam(StringBuffer sqlBuffer, Map<String, Object> paramMap,
+			Map<String, String> requestmap, Map<String, Object> cachedata) throws CoreException {
 
-            if (value != null) {
-                paramMap.put("data{" + setParam + "}", value);
-            } else {
-                throw new CoreException(sql + "中参数data{" + setParam + "}值不存在！");
-            }
-        }
+		String sql = sqlBuffer.toString();
+		ValueResolver resolver = new ValueResolver(sql, true);
+		resolver.setCachedata(cachedata);
+		resolver.setRequestdata(requestmap);
+		try {
+			resolver.resolve();
+		} catch (Exception e) {
+			throw new CoreException(e);
+		}
+		for (String key : resolver.getResultParam().keySet()) {
+			paramMap.put(key, resolver.getResultParam().get(key));
+		}
+		sqlBuffer.setLength(0);
+		sqlBuffer.append(sql);
+		return sqlBuffer;
 
-        pattern = Pattern.compile("(sql\\{)[^\\}]+(\\})");
-        matcher = pattern.matcher(sql);
-        while (matcher.find()) {
-            String param = matcher.group();
-            param = param.replaceAll("\\{", "").replaceAll("\\}", "").replaceFirst("sql", "");
-            String setParam = param;
-            String value = ValueTool.getValue(param, requestmap, cachedata);
-            if (value != null) {
-                newSql = newSql.replace("sql{" + param + "}", value);
-            } else {
-                throw new CoreException(sql + "中参数sql{" + setParam + "}值不存在！");
-            }
-        }
-        sqlBuffer.setLength(0);
-        sqlBuffer.append(newSql);
-        return sqlBuffer;
-    }
-
+	}
 }
