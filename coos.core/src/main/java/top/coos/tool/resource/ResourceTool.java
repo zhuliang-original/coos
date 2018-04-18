@@ -16,6 +16,7 @@ import java.util.jar.JarFile;
 import top.coos.constant.Constant;
 import top.coos.tool.file.FileTool;
 import top.coos.tool.string.StringHelper;
+import top.coos.util.PathUtil;
 
 public class ResourceTool {
 
@@ -55,6 +56,7 @@ public class ResourceTool {
 		for (String path : sets) {
 
 			if (!StringHelper.isEmpty(path)) {
+				path = PathUtil.decode(path);
 				if (new File(path).getName().indexOf(".jar") > 0) {
 					String jarPath = path;
 					jarFile = new JarFile(jarPath);

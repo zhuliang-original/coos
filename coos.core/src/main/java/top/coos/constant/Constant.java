@@ -1,6 +1,7 @@
 package top.coos.constant;
 
 import top.coos.classloader.CoreClassLoader;
+import top.coos.util.PathUtil;
 
 /**
  * 常量参数
@@ -47,7 +48,6 @@ public interface Constant {
 
 		public static final String SERVER_DATABASE = "config/coos/server/database.properties";
 
-
 		public static final String FILE_FOLDER = "coos.folder";
 	}
 
@@ -72,6 +72,7 @@ public interface Constant {
 			if (Class.CLASS_LOADER.getResource("") != null) {
 				path = Class.CLASS_LOADER.getResource("").getPath();
 			}
+			path = PathUtil.decode(path);
 			path = path.replace("WEB-INF/classes/", "");
 			path = path.replace("target/classes/", "");
 			path = path.replace("bin/classes/", "");

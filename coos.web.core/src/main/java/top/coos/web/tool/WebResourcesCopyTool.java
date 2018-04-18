@@ -12,6 +12,7 @@ import top.coos.constant.Constant;
 import top.coos.exception.CoreException;
 import top.coos.tool.file.FileTool;
 import top.coos.tool.string.StringHelper;
+import top.coos.util.PathUtil;
 import top.coos.web.constant.WebConstant;
 
 public class WebResourcesCopyTool {
@@ -62,6 +63,8 @@ public class WebResourcesCopyTool {
 	public static void copy(String path, String packagepath, String topath, JarFile jar) throws CoreException {
 
 		try {
+			path = PathUtil.decode(path);
+			topath = PathUtil.decode(topath);
 			if (jar != null || new File(path).getName().indexOf(".jar") > 0) {
 				String jarPath = path;
 				if (jar != null) {
