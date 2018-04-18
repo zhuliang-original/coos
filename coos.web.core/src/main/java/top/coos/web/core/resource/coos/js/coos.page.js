@@ -1200,6 +1200,12 @@ window.initElementsData = function(layout) {
 			var buttonObject = this.buttonObjects[i];
 			config.$row = $oneView;
 			if (buttonObject.canView(config)) {
+				if($container.closest('.coos-box-window').length > 0){
+					if($container.closest('.coos-box-window').find('[buttonid="'+buttonObject.button.buttonid+'"]').length > 0){
+						continue;
+					}
+				}
+				
 				var $button = buttonObject.getView(this.getButtonPlace(buttonObject), config);
 				if ($button && buttonObject.button.config.bindenter) {
 					$oneView.on("keydown", function(e) {
