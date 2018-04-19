@@ -42,6 +42,10 @@ public class Client extends Support {
 
 	private Map<String, PermissionOperate> operate_map = new HashMap<String, PermissionOperate>();
 
+	private List<PermissionOperate> all_operates = new ArrayList<PermissionOperate>();
+
+	private Map<String, PermissionOperate> all_operate_map = new HashMap<String, PermissionOperate>();
+
 	private List<PermissionMenu> menus = new ArrayList<PermissionMenu>();
 
 	private String menus_json;
@@ -220,6 +224,30 @@ public class Client extends Support {
 			}
 		}
 		this.operates = operates;
+	}
+
+	public void setAll_operates(List<PermissionOperate> all_operates) {
+
+		all_operate_map = new HashMap<String, PermissionOperate>();
+		if (all_operates != null) {
+			for (PermissionOperate all_operate : all_operates) {
+				if (!StringHelper.isEmpty(all_operate.getServletpath())) {
+					all_operate_map.put(all_operate.getServletpath(), all_operate);
+				}
+
+			}
+		}
+		this.all_operates = all_operates;
+	}
+
+	public List<PermissionOperate> getAll_operates() {
+
+		return all_operates;
+	}
+
+	public Map<String, PermissionOperate> getAll_operate_map() {
+
+		return all_operate_map;
 	}
 
 	public Map<String, PermissionOperate> getOperate_map() {
