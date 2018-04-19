@@ -31,7 +31,7 @@ public class ValueTool {
 	 */
 	public static String getValue(String value, Map<String, String> requestmap, Map<String, Object> cachedata) {
 
-		if (StringHelper.isEmpty(value)) {
+		if (value == null) {
 			return null;
 		}
 
