@@ -22,7 +22,6 @@ public class DateResolver extends BaseResolver {
 		Date date = new Date();
 		SimpleDateFormat dateFormat = new SimpleDateFormat(format.trim());
 		this.result = dateFormat.format(date);
-		System.out.println(format);
 
 		return result;
 	}
