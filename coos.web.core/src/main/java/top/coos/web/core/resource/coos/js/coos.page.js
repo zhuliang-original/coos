@@ -3034,7 +3034,6 @@ window.initElementsData = function(layout) {
 		} else {
 			$input = this.getInput();
 		}
-		this.initContent($input);
 		if ($th != null) {
 			this.$view.append($th);
 		}
@@ -3042,6 +3041,7 @@ window.initElementsData = function(layout) {
 			this.$view.append($td);
 		}
 		if ($input != null) {
+			this.initInput($input);
 			if ($td != null) {
 				$td.empty().append($input);
 			} else {
@@ -3214,7 +3214,7 @@ window.initElementsData = function(layout) {
 			});
 		});
 	};
-	Element.prototype.initContent = function($input) {
+	Element.prototype.initInput = function($input) {
 	};
 
 	co.page.panel.layout.element = {};
@@ -3439,7 +3439,7 @@ window.initElementsData = function(layout) {
 		ThisElement.prototype = new Super();
 	})();
 
-	ThisElement.prototype.initContent = function($input) {
+	ThisElement.prototype.initInput = function($input) {
 	};
 
 	var ThisElementConfig = {
@@ -3460,7 +3460,7 @@ window.initElementsData = function(layout) {
 		ThisElement.prototype = new Super();
 	})();
 
-	ThisElement.prototype.initContent = function($input) {
+	ThisElement.prototype.initInput = function($input) {
 	};
 
 	var ThisElementConfig = {
@@ -3481,7 +3481,7 @@ window.initElementsData = function(layout) {
 		ThisElement.prototype = new Super();
 	})();
 
-	ThisElement.prototype.initContent = function($input) {
+	ThisElement.prototype.initInput = function($input) {
 		$input.attr('isinteger', true);
 	};
 
@@ -3503,7 +3503,7 @@ window.initElementsData = function(layout) {
 		ThisElement.prototype = new Super();
 	})();
 
-	ThisElement.prototype.initContent = function($input) {
+	ThisElement.prototype.initInput = function($input) {
 		$input.attr('isphone', true);
 	};
 
@@ -3525,7 +3525,7 @@ window.initElementsData = function(layout) {
 		ThisElement.prototype = new Super();
 	})();
 
-	ThisElement.prototype.initContent = function($input) {
+	ThisElement.prototype.initInput = function($input) {
 		$input.attr('ismailbox', true);
 	};
 
@@ -3547,7 +3547,7 @@ window.initElementsData = function(layout) {
 		ThisElement.prototype = new Super();
 	})();
 
-	ThisElement.prototype.initContent = function($input) {
+	ThisElement.prototype.initInput = function($input) {
 		$input.attr('iscardid', true);
 	};
 
@@ -3577,7 +3577,7 @@ window.initElementsData = function(layout) {
 		return co.date.formatDatetime(value);
 	};
 
-	ThisElement.prototype.initContent = function() {
+	ThisElement.prototype.initInput = function() {
 	};
 	var ThisElementConfig = {
 		name : "日期时间",
@@ -3605,7 +3605,7 @@ window.initElementsData = function(layout) {
 		return co.date.formatDatetime(value);
 	};
 
-	ThisElement.prototype.initContent = function() {
+	ThisElement.prototype.initInput = function() {
 	};
 
 	var ThisElementConfig = {
@@ -3634,7 +3634,7 @@ window.initElementsData = function(layout) {
 		return co.date.formatDatetime(value);
 	};
 
-	ThisElement.prototype.initContent = function() {
+	ThisElement.prototype.initInput = function() {
 	};
 
 	var ThisElementConfig = {
@@ -3655,7 +3655,7 @@ window.initElementsData = function(layout) {
 		ThisElement.prototype = new Super();
 	})();
 
-	ThisElement.prototype.initContent = function($input) {
+	ThisElement.prototype.initInput = function($input) {
 		$input.val(0);
 	};
 
@@ -3697,7 +3697,7 @@ window.initElementsData = function(layout) {
 		return true;
 	};
 
-	ThisElement.prototype.initContent = function($input) {
+	ThisElement.prototype.initInput = function($input) {
 	};
 
 	var ThisElementConfig = {
@@ -3725,7 +3725,7 @@ window.initElementsData = function(layout) {
 		return true;
 	};
 
-	ThisElement.prototype.initContent = function($input) {
+	ThisElement.prototype.initInput = function($input) {
 	};
 
 	var ThisElementConfig = {
@@ -3753,7 +3753,7 @@ window.initElementsData = function(layout) {
 		return true;
 	};
 
-	ThisElement.prototype.initContent = function($input) {
+	ThisElement.prototype.initInput = function($input) {
 		$input.addClass('input-rule-multi-select');
 
 	};
@@ -3783,7 +3783,7 @@ window.initElementsData = function(layout) {
 		return true;
 	};
 
-	ThisElement.prototype.initContent = function($input) {
+	ThisElement.prototype.initInput = function($input) {
 	};
 
 	var ThisElementConfig = {
@@ -3811,7 +3811,7 @@ window.initElementsData = function(layout) {
 		return true;
 	};
 
-	ThisElement.prototype.initContent = function($input) {
+	ThisElement.prototype.initInput = function($input) {
 	};
 
 	var ThisElementConfig = {
@@ -3838,7 +3838,7 @@ window.initElementsData = function(layout) {
 		return true;
 	};
 
-	ThisElement.prototype.initContent = function($input) {
+	ThisElement.prototype.initInput = function($input) {
 	};
 
 	var ThisElementConfig = {
@@ -3865,7 +3865,7 @@ window.initElementsData = function(layout) {
 		return true;
 	};
 
-	ThisElement.prototype.initContent = function($input) {
+	ThisElement.prototype.initInput = function($input) {
 	};
 
 	var ThisElementConfig = {
@@ -3893,7 +3893,7 @@ window.initElementsData = function(layout) {
 		return $("<textarea ></textarea>");
 	};
 
-	ThisElement.prototype.initContent = function($input) {
+	ThisElement.prototype.initInput = function($input) {
 	};
 
 	var ThisElementConfig = {
@@ -3918,7 +3918,7 @@ window.initElementsData = function(layout) {
 		return $("<textarea ></textarea>");
 	};
 
-	ThisElement.prototype.initContent = function($input) {
+	ThisElement.prototype.initInput = function($input) {
 	};
 
 	var ThisElementConfig = {
@@ -3939,7 +3939,7 @@ window.initElementsData = function(layout) {
 		ThisElement.prototype = new Super();
 	})();
 
-	ThisElement.prototype.initContent = function($input) {
+	ThisElement.prototype.initInput = function($input) {
 
 		if ($input[0].tagName == 'INPUT') {
 			$input.addClass('input-rule-file');
@@ -3966,7 +3966,7 @@ window.initElementsData = function(layout) {
 		ThisElement.prototype = new Super();
 	})();
 
-	ThisElement.prototype.initContent = function($input) {
+	ThisElement.prototype.initInput = function($input) {
 
 		if ($input[0].tagName == 'INPUT') {
 			$input.addClass('input-rule-file');
@@ -3992,7 +3992,7 @@ window.initElementsData = function(layout) {
 		ThisElement.prototype = new Super();
 	})();
 
-	ThisElement.prototype.initContent = function($input) {
+	ThisElement.prototype.initInput = function($input) {
 		if ($input[0].tagName == 'INPUT') {
 			$input.addClass('input-rule-file-image');
 			$input.attr('file-count', '1');
@@ -4000,12 +4000,12 @@ window.initElementsData = function(layout) {
 	};
 
 	ThisElement.prototype.appendTdValue = function(value) {
-		this.$input.empty();
+		this.$td.empty();
 		var $img = $("<img class='element-rule-image' style=\"width: 40px;\" />");
 		var urls = co.url.formatImageUrls(value);
 		$img.attr('path', urls[0]);
-		this.$input.append($img);
-		this.$input.css('line-height', 0);
+		this.$td.append($img);
+		this.$td.css('line-height', 0);
 	};
 
 	var ThisElementConfig = {
@@ -4026,7 +4026,7 @@ window.initElementsData = function(layout) {
 		ThisElement.prototype = new Super();
 	})();
 
-	ThisElement.prototype.initContent = function($input) {
+	ThisElement.prototype.initInput = function($input) {
 
 		if ($input[0].tagName == 'INPUT') {
 			$input.addClass('input-rule-file-image');
@@ -4052,7 +4052,7 @@ window.initElementsData = function(layout) {
 		ThisElement.prototype = new Super();
 	})();
 
-	ThisElement.prototype.initContent = function($input) {
+	ThisElement.prototype.initInput = function($input) {
 		$input.addClass('input-rule-file-audio');
 	};
 
@@ -4074,7 +4074,7 @@ window.initElementsData = function(layout) {
 		ThisElement.prototype = new Super();
 	})();
 
-	ThisElement.prototype.initContent = function($input) {
+	ThisElement.prototype.initInput = function($input) {
 		$input.addClass('input-rule-file-video');
 	};
 
