@@ -6484,7 +6484,7 @@ String.prototype.replaceAll = function(arg1, arg2) {
 		labelsize = labelsize > 12 ? 12 : labelsize;
 
 		if (co.isEmpty(label)) {
-			//labelsize = 0;
+			// labelsize = 0;
 		}
 
 		var inputsize = 12 - labelsize;
@@ -6518,8 +6518,8 @@ String.prototype.replaceAll = function(arg1, arg2) {
 			html = html.replaceAll(/\$input-size\/2/, ("" + inputsize / 2).replace(".", "-"));
 			html = html.replaceAll(/\$input-size/, ("" + inputsize).replace(".", "-"));
 		} else {
-			html = html.replaceAll(/\$input-size\/2/, inputsize / 2);
-			html = html.replaceAll(/\$input-size/, inputsize);
+			html = html.replaceAll(/\$input-size\/2/, ("" + inputsize / 2).replace(".", "-"));
+			html = html.replaceAll(/\$input-size/, ("" + inputsize).replace(".", "-"));
 		}
 		html = html.replaceAll(/\$help-info/, helpinfo);
 		html = html.replaceAll(/\$label/, label);
