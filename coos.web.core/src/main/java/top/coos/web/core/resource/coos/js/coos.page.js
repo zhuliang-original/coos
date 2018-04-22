@@ -2374,7 +2374,7 @@ window.initElementsData = function(layout) {
 		}
 		result.rowData = rowData;
 		result.formData = formData;
-
+		return result;
 	};
 
 	ThisLayout.prototype.appendDataBefore = function(config) {
