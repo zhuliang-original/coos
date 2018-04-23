@@ -2951,9 +2951,6 @@ window.initElementsData = function(layout) {
 		if (!co.isEmpty(this.element.thisvalue)) {
 			$input.attr("defaultvalue", this.element.thisvalue);
 		}
-		if (!this.config.design) {
-			this.bindEvent();
-		}
 	};
 
 	Element.prototype.getInput = function() {
@@ -3126,6 +3123,9 @@ window.initElementsData = function(layout) {
 		this.$input = $input;
 		this.$th = $th;
 		this.$td = $td;
+		if (!this.config.design) {
+			this.bindEvent();
+		}
 		this.$view = this.$view.children();
 		this.initViewAfter();
 	};
