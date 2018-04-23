@@ -13,7 +13,7 @@
 	<script language="javascript" src="${basePath}/resource/plugins/ie/html5.js"></script>
 <![endif]-->
 <script type="text/javascript" src="${basePath}/resource/plugins/jquery/jquery.js"></script>
-<c:if test="${!isdebug || !find_frame}">
+<c:if test="${!FIND_FRAME_SERVER}">
 	
 	<script type="text/javascript" src="${basePath}/resource/coos/js/coos.js"></script>
 	<script type="text/javascript" src="${basePath}/resource/coos/js/coos.frame.js"></script>
@@ -23,8 +23,8 @@
 	<script type="text/javascript" src="/frame/resource/coos/js/coos.frame.js"></script>
 	<script type="text/javascript" src="/frame/resource/coos/js/coos.page.js"></script> -->
 </c:if>
-<c:if test="${isdebug && find_frame }">
-	<script type="text/javascript" src="${basePath}/resource/coos/resource/coos.js"></script>
-	<script type="text/javascript" src="${basePath}/resource/coos/resource/coos.frame.js"></script>
-	<script type="text/javascript" src="${basePath}/resource/coos/resource/core.page.js"></script>
+<c:if test="${FIND_FRAME_SERVER }">
+	<script type="text/javascript" src="${FRAME_COOS_JS_PATH}"></script>
+	<script type="text/javascript" src="${FRAME_COOS_FRAME_JS_PATH}"></script>
+	<script type="text/javascript" src="${FRAME_COOS_PAGE_JS_PATH}"></script>
 </c:if>
