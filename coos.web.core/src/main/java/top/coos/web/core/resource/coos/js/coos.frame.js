@@ -38,7 +38,7 @@ var themes = null;
 		$frame.append($headerbox);
 
 		var $bodybox = $('<div class="coos-body-box"></div>');
-		var $body = $('<div class="coos-body"><div class="coos-body-left"></div><div class="coos-body-center"></div><div class="coos-body-right"></div></div>');
+		var $body = $('<div class="coos-body"><div class="coos-body-left"></div><div class="coos-body-center"><div class="coos-body-top"></div></div><div class="coos-body-right"></div></div>');
 		var $pagebox = $('<div class="coos-page-box"></div>');
 		$bodybox.append($body);
 		$body.find('.coos-body-center').append($pagebox);
@@ -192,7 +192,85 @@ var themes = null;
 		}
 		co.frame.checkBackTop();
 	};
+	Frame.prototype.fullOrEmptyScreen = function() {
+		if (this.$frame.hasClass('coos-full-vertical') && this.$frame.hasClass('coos-full-horizontal')) {
+			this.emptyScreen();
+		} else {
+			this.fullScreen();
+		}
+	};
 
+	Frame.prototype.fullOrEmptyVertical = function() {
+		if (this.$frame.hasClass('coos-full-vertical')) {
+			this.emptyVertical();
+		} else {
+			this.fullVertical();
+		}
+	};
+
+	Frame.prototype.fullOrEmptyHorizontal = function() {
+		if (this.$frame.hasClass('coos-full-horizontal')) {
+			this.emptyHorizontal();
+		} else {
+			this.fullHorizontal();
+		}
+	};
+	Frame.prototype.fullScreen = function() {
+		this.fullVertical();
+		this.fullHorizontal();
+	};
+
+	Frame.prototype.emptyScreen = function() {
+		this.emptyVertical();
+		this.emptyHorizontal();
+	};
+
+	Frame.prototype.fullVertical = function() {
+		var $frame = this.$frame;
+		var $body = this.$body;
+
+		$frame.addClass('coos-full-vertical');
+		$body.addClass('coos-over-hidden');
+		co.frame.initSize();
+		window.setTimeout(function() {
+			$body.removeClass('coos-over-hidden');
+		}, 300);
+	};
+
+	Frame.prototype.fullHorizontal = function() {
+		var $frame = this.$frame;
+		var $body = this.$body;
+
+		$frame.addClass('coos-full-horizontal');
+		$body.addClass('coos-over-hidden');
+		co.frame.initSize();
+		window.setTimeout(function() {
+			$body.removeClass('coos-over-hidden');
+		}, 300);
+	};
+	Frame.prototype.emptyVertical = function() {
+		var $frame = this.$frame;
+		var $body = this.$body;
+
+		$frame.removeClass('coos-full-vertical');
+		$body.addClass('coos-over-hidden');
+		window.setTimeout(function() {
+			co.frame.initSize();
+			$body.removeClass('coos-over-hidden');
+		}, 300);
+	};
+
+	Frame.prototype.emptyHorizontal = function() {
+		var $frame = this.$frame;
+		var $body = this.$body;
+
+		$frame.removeClass('coos-full-horizontal');
+		$body.addClass('coos-over-hidden');
+		co.frame.initSize();
+		window.setTimeout(function() {
+			$body.removeClass('coos-over-hidden');
+		}, 300);
+	};
 	co.frame.init = function(config) {
 		co.frame.frame = co.frame.create(config);
 		return co.frame.frame;
@@ -491,13 +569,13 @@ $(function() {
 		co.frame.checkBackTop();
 	});
 	$('html').on('click', '[coos-action="full-or-empty-horizontal"]', function(e) {
-		lastThemeObject.fullOrEmptyHorizontal();
+		co.frame.frame.fullOrEmptyHorizontal();
 	});
 	$('html').on('click', '[coos-action="full-or-empty-vertical"]', function(e) {
-		lastThemeObject.fullOrEmptyVertical();
+		co.frame.frame.fullOrEmptyVertical();
 	});
 	$('html').on('click', '[coos-action="full-or-empty-screen"]', function(e) {
-		lastThemeObject.fullOrEmptyScreen();
+		co.frame.frame.fullOrEmptyScreen();
 	});
 	$('html').on('click', '.coos-control-body-left', function(e) {
 		var $frame = $('.coos-frame')
@@ -1273,13 +1351,17 @@ co.frame.theme.getButton = function(button, isChild) {
 (function() {
 	co.frame.theme.getTheme = function(type, name, config) {
 		var THIS_PROJECT = window.THIS_PROJECT || {};
+		var defaultthemeconfig = {};
+		if (!co.isEmpty(THIS_PROJECT.defaultthemeconfig)) {
+			defaultthemeconfig = JSON.parse(THIS_PROJECT.defaultthemeconfig);
+		}
 		var defaultType = "MANAGER";
 		var defaultName = "STYLE-2";
-		if (THIS_PROJECT && !co.isEmpty(THIS_PROJECT.defaultthemetype)) {
-			defaultType = THIS_PROJECT.defaultthemetype;
+		if (!co.isEmpty(defaultthemeconfig.themetype)) {
+			defaultType = defaultthemeconfig.themetype;
 		}
-		if (THIS_PROJECT && !co.isEmpty(THIS_PROJECT.defaultstyletype)) {
-			defaultName = THIS_PROJECT.defaultstyletype;
+		if (!co.isEmpty(defaultthemeconfig.styletype)) {
+			defaultName = defaultthemeconfig.styletype;
 		}
 		name = co.isEmpty(name) ? defaultName : name;
 		type = co.isEmpty(type) ? defaultType : type;
@@ -1303,32 +1385,32 @@ co.frame.theme.getButton = function(button, isChild) {
 					themeDemo.header.config.title = THIS_PROJECT.headertitle;
 				}
 			}
-			if (!co.isEmpty(THIS_PROJECT.defaultcolortype)) {
-				var colorScheme = co.frame.theme.model.get(type).getColor(THIS_PROJECT.defaultcolortype);
+			if (!co.isEmpty(defaultthemeconfig.colortype)) {
+				var colorScheme = co.frame.theme.model.get(type).getColor(defaultthemeconfig.colortype);
 				jQuery.extend(true, themeDemo, colorScheme);
 			}
-			if (!co.isEmpty(THIS_PROJECT.defaultheadercolortype)) {
-				var colorScheme = co.frame.theme.model.get(type).getColor(THIS_PROJECT.defaultheadercolortype);
+			if (!co.isEmpty(defaultthemeconfig.headercolortype)) {
+				var colorScheme = co.frame.theme.model.get(type).getColor(defaultthemeconfig.headercolortype);
 				jQuery.extend(true, themeDemo, {
 					header : colorScheme.header
 				});
 			}
-			if (!co.isEmpty(THIS_PROJECT.defaultbodycolortype)) {
-				var colorScheme = co.frame.theme.model.get(type).getColor(THIS_PROJECT.defaultbodycolortype);
+			if (!co.isEmpty(defaultthemeconfig.bodycolortype)) {
+				var colorScheme = co.frame.theme.model.get(type).getColor(defaultthemeconfig.bodycolortype);
 				jQuery.extend(true, themeDemo, {
 					body : colorScheme.body
 				});
 			}
-			if (!co.isEmpty(THIS_PROJECT.defaultfootercolortype)) {
-				var colorScheme = co.frame.theme.model.get(type).getColor(THIS_PROJECT.defaultfootercolortype);
+			if (!co.isEmpty(defaultthemeconfig.footercolortype)) {
+				var colorScheme = co.frame.theme.model.get(type).getColor(defaultthemeconfig.footercolortype);
 				jQuery.extend(true, themeDemo, {
 					footer : colorScheme.footer
 				});
 			}
-			if (!co.isEmpty(THIS_PROJECT.defaultmenuplace)) {
+			if (!co.isEmpty(defaultthemeconfig.menuplace)) {
 				jQuery.extend(true, themeDemo, {
 					config : {
-						menuplaces : THIS_PROJECT.defaultmenuplace
+						menuplaces : defaultthemeconfig.menuplace
 					}
 				});
 			}
@@ -1351,7 +1433,28 @@ co.frame.theme.getButton = function(button, isChild) {
 					}
 				});
 			}
+			jQuery.extend(true, themeDemo, {
+				header : {
+					config : {
+						showcontrolbodyleft : co.isTrue(defaultthemeconfig.showcontrolbodyleft)
+					}
+				}
+			});
 
+			jQuery.extend(true, themeDemo, {
+				header : {
+					config : {
+						showcontrolbodyright : co.isTrue(defaultthemeconfig.showcontrolbodyright)
+					}
+				}
+			});
+			jQuery.extend(true, themeDemo, {
+				body : {
+					config : {
+						openfullnavigation : co.isTrue(defaultthemeconfig.openfullnavigation)
+					}
+				}
+			});
 		}
 		themeDemo.themeid = co.getNumber();
 		return themeDemo;
@@ -1396,6 +1499,16 @@ co.frame.theme.getButton = function(button, isChild) {
 			var config = theme.header.config;
 			this.$frame.addClass('coos-open-header');
 			var $headerleft = $header.find(".coos-header-left");
+
+			var $leftUl = $('<ul class="coos-header-left-button coos-menu-navigation "></ul>');
+			$header.find('.coos-header-left-button').remove();
+
+			if (config.showcontrolbodyleft) {
+				$headerleft.append($leftUl);
+				var $button = $('<li class="coos-control-body-left"><a class="fa fa-navicon"></a></li>');
+				$leftUl.append($button);
+			}
+			
 			if (!coos.isEmpty(config.title) || !coos.isEmpty(config.icon)) {
 				var icon = config.icon;
 				if (!coos.isEmpty(icon)) {
@@ -1412,18 +1525,10 @@ co.frame.theme.getButton = function(button, isChild) {
 				var $input = $('<input class="coos-header-search-input coos-bd-no mgl-20" placeholder="搜索"/>');
 				$content.append($input);
 			}
-			var $leftUl = $('<ul class="float-left coos-header-left-button coos-menu-navigation "></ul>');
-			var $rightUl = $('<ul class="float-right coos-header-right-button coos-menu-navigation "></ul>');
-			$header.find('.coos-header-left-button').remove();
+			var $rightUl = $('<ul class="coos-header-right-button coos-menu-navigation "></ul>');
 			$header.find('.coos-header-right-button').remove();
-
-			if (config.showcontrolbodyleft) {
-				$header.find('.coos-header-left').before($leftUl);
-				var $button = $('<li class="coos-control-body-left"><a class="fa fa-navicon"></a></li>');
-				$leftUl.append($button);
-			}
 			if (config.showcontrolbodyright) {
-				$header.find('.coos-header-right').before($rightUl);
+				$header.find('.coos-header-right').append($rightUl);
 				var $button = $('<li class="coos-control-body-right"><a class="fa fa-navicon"></a></li>');
 				$rightUl.append($button);
 			}
@@ -1500,6 +1605,7 @@ co.frame.theme.getButton = function(button, isChild) {
 
 	ThisTheme.prototype.initMenuView = function() {
 		var topmenus = this.menu_object.getTopMenus();
+		var this_ = this;
 		var $center = this.$header.find(".coos-header-center").empty();
 		if (this.hasHeaderMenu) {
 			this.initHeaderMenu(topmenus);
@@ -1516,7 +1622,7 @@ co.frame.theme.getButton = function(button, isChild) {
 			$menu.closest('li').addClass('active');
 			var $parentli = $menu.closest('ul').closest('li');
 			if ($parentli.length > 0 && !$parentli.hasClass('coos-open')) {
-				coos.frame.openOrCloseLi($parentli, true);
+				this_.menu_object.openOrCloseLi($parentli, true);
 			}
 		}
 	};
@@ -2095,15 +2201,16 @@ co.frame.theme.getButton = function(button, isChild) {
 	themeDemo.typeSchemeType = "STYLE-2";
 	themeDemo.label = "平台样式";
 	themeDemo.width = "";
-	themeDemo.minwidth = "1024";
+	themeDemo.minwidth = "1100";
 	themeDemo.backgroundcolor = "#e7e8eb";
 	themeDemo.config.menuplaces = "HEADER,BODY";
 
 	themeDemo.header.width = "";
 	themeDemo.header.minwidth = "";
 	themeDemo.header.maxwidth = "";
-	themeDemo.header.contentwidth = "80%";
-	themeDemo.header.contentmaxwidth = "1200";
+	themeDemo.header.contentwidth = "90%";
+	themeDemo.header.contentmaxwidth = "1300";
+	themeDemo.header.contentminwidth = "1100";
 	themeDemo.header.contentstyle = "font-family: \"Segoe UI\", \"Lucida Grande\", Helvetica, Arial, \"Microsoft YaHei\", FreeSans, Arimo, \"Droid Sans\", \"wenquanyi micro hei\", \"Hiragino Sans GB\", \"Hiragino Sans GB W3\", \"FontAwesome\", sans-serif;";
 	themeDemo.header.height = "50";
 	themeDemo.header.style = "border-bottom: 3px solid #2bbdb1;";
@@ -2290,6 +2397,7 @@ co.frame.theme.getButton = function(button, isChild) {
 
 	ThisTheme.prototype.initMenuView = function() {
 		var topmenus = this.menu_object.getTopMenus();
+		var this_ = this;
 		var $center = this.$header.find(".coos-header-center").empty();
 		if (this.hasHeaderMenu) {
 			this.initHeaderMenu(topmenus);
@@ -2306,7 +2414,7 @@ co.frame.theme.getButton = function(button, isChild) {
 			$menu.closest('li').addClass('active');
 			var $parentli = $menu.closest('ul').closest('li');
 			if ($parentli.length > 0 && !$parentli.hasClass('coos-open')) {
-				coos.frame.openOrCloseLi($parentli, true);
+				this_.menu_object.openOrCloseLi($parentli, true);
 			}
 		}
 	};
@@ -2416,7 +2524,7 @@ co.frame.theme.getButton = function(button, isChild) {
 	};
 
 	var ThisThemeConfig = {
-		name : "管理后台主题",
+		name : "移动端样式",
 		columns : [ {
 			text : "菜单位置",
 			name : "menuplaces",
