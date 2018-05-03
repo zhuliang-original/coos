@@ -211,9 +211,11 @@
 }
 .coos-full-vertical .coos-body-box {
   margin-top: 0px !important;
+  margin-bottom: 0px !important;
 }
 .coos-full-vertical .coos-body-center {
   margin-top: 0px !important;
+  margin-bottom: 0px !important;
 }
 .coos-full-vertical .coos-header-box {
   border: 0px !important;
@@ -223,6 +225,7 @@
 }
 .coos-full-horizontal.coos-full-vertical .coos-body-box {
   margin-top: 0px !important;
+  margin-bottom: 0px !important;
   width: 100% !important;
   min-width: 100% !important;
   max-width: 100% !important;
@@ -233,6 +236,11 @@
 }
 .coos-full-horizontal .coos-body-right {
   margin-right: 0px !important;
+}
+.coos-full-horizontal .coos-body-box {
+  width: 100% !important;
+  min-width: 100% !important;
+  max-width: 100% !important;
 }
 .coos-header-box {
   transition: all .3s ease 0s;
