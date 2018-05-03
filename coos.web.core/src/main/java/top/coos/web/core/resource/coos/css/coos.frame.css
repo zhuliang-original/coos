@@ -82,10 +82,12 @@
 .coos-header .coos-header-left-button {
   margin-top: 10px;
   float: right !important;
+  margin-right: 10px;
 }
 .coos-header .coos-header-right-button {
   margin-top: 10px;
   float: right !important;
+  margin-right: 10px;
 }
 .coos-header-right .coos-header-button {
   float: right !important;
