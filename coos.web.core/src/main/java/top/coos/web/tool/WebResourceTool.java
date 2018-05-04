@@ -82,13 +82,13 @@ public class WebResourceTool {
 								.replace("/coos.folder", "/frame/");
 
 						request.getSession().setAttribute("FIND_FRAME_SERVER", true);
-						String FRAME_COOS_CSS_PATH = FRAME_SERVER_URL + "/resource/coos/css/coos.css";
+						String FRAME_COOS_CSS_PATH = FRAME_SERVER_URL + "/resource/coos/merge/coos.less";
 						String FRAME_COOS_JS_PATH = FRAME_SERVER_URL + "/resource/coos/merge/coos.js";
 
-						String FRAME_COOS_FRAME_CSS_PATH = FRAME_SERVER_URL + "/resource/coos/css/coos.frame.css";
+						String FRAME_COOS_FRAME_CSS_PATH = FRAME_SERVER_URL + "/resource/coos/merge/coos.frame.less";
 						String FRAME_COOS_FRAME_JS_PATH = FRAME_SERVER_URL + "/resource/coos/merge/coos.frame.js";
 
-						String FRAME_COOS_PAGE_CSS_PATH = FRAME_SERVER_URL + "/resource/coos/css/coos.page.css";
+						String FRAME_COOS_PAGE_CSS_PATH = FRAME_SERVER_URL + "/resource/coos/merge/coos.page.less";
 						String FRAME_COOS_PAGE_JS_PATH = FRAME_SERVER_URL + "/resource/coos/merge/coos.page.js";
 
 						request.getSession().setAttribute("FRAME_COOS_CSS_PATH", FRAME_COOS_CSS_PATH);
