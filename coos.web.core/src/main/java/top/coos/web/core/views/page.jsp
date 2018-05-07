@@ -31,12 +31,15 @@
 	<script type="text/javascript">
 		$(function() {
 			var pageid = "${this_page_id }";
+			var cachestr = '${cachestr }';
 			var requestmapstr = '${requestmapstr }';
 			var requestmap = eval('(' + requestmapstr + ')');
+			var cache = eval('(' + cachestr + ')');
 			var $pageContent = $('.coos-page-' + pageid);
 			var config = {
 				pageid : pageid,
 				requestmap : requestmap || {},
+				cache : cache || {},
 				container : $pageContent
 			};
 			var page = coos.page.create(config);
