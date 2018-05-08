@@ -32,6 +32,9 @@
 		$(function() {
 			var pageid = "${this_page_id }";
 			var cachestr = '${cachestr }';
+			if(coos.isEmpty(cachestr)){
+				cachestr = "{}";
+			}
 			var requestmapstr = '${requestmapstr }';
 			var requestmap = eval('(' + requestmapstr + ')');
 			var cache = eval('(' + cachestr + ')');

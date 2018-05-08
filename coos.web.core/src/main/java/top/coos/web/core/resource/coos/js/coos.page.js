@@ -3177,15 +3177,53 @@ window.initElementsData = function(layout) {
 		}
 	};
 
+	Element.prototype.getValue = function(value) {
+		return this.getFormatValue(value);
+	};
 	Element.prototype.getTextValue = function(value) {
 		if (this.textUseSelectData()) {
-			return this.getSelectDataText(this.getValue(value));
+			var textValue = this.getSelectDataText(value);
+			return this.getFormatTextValue(value, textValue);
+		}
+		return this.getFormatValue(value);
+	};
+
+	Element.prototype.getFormatValue = function(value) {
+		var formatvalue = this.element.config.formatvalue;
+		if (!coos.isEmpty(formatvalue)) {
+			var dataConfig = this.dataConfig;
+			dataConfig.this_value = value;
+			var resolveValue = coos.resolve.value({
+				value : formatvalue,
+				data : dataConfig
+			});
+			try {
+				return resolveValue.getResult();
+			} catch (e) {
+				console.log(e);
+				return formatvalue;
+			}
 		}
 		return value;
 	};
-
-	Element.prototype.getValue = function(value) {
-		return value;
+	Element.prototype.getFormatTextValue = function(value, valueText) {
+		var formatvalue = this.element.config.formatvalue;
+		if (!coos.isEmpty(formatvalue)) {
+			var dataConfig = this.dataConfig;
+			dataConfig.this_value = value;
+			dataConfig.this_value_text = valueText;
+			var resolveValue = coos.resolve.value({
+				value : formatvalue,
+				data : dataConfig
+			});
+			try {
+				return resolveValue.getResult();
+			} catch (e) {
+				console.log(e);
+				return formatvalue;
+			}
+		}
+		return valueText;
 	};
 
 	Element.prototype.getView = function(place) {
@@ -3324,6 +3362,9 @@ window.initElementsData = function(layout) {
 		text : "默认值",
 		name : "defaultvalue"
 	}, {
+		text : "格式化值",
+		name : "formatvalue"
+	}, {
 		text : "显示",
 		name : "display",
 		inputtype : "switch"
@@ -3331,10 +3372,10 @@ window.initElementsData = function(layout) {
 		text : "点击排序",
 		name : "clicktosort",
 		inputtype : "switch"
-	} , {
+	}, {
 		text : "帮助信息",
 		name : "helpinfo"
-	}];
+	} ];
 	var inputColumns = [ {
 		text : "使用请求值",
 		name : "userrequestmapfordefault",
