@@ -14,7 +14,7 @@ public class SqlTool {
 		resolver.setCachedata(cachedata);
 		resolver.setRequestdata(requestmap);
 		try {
-			resolver.resolve();
+			sql = resolver.resolve();
 		} catch (Exception e) {
 			throw new CoreException(e);
 		}
