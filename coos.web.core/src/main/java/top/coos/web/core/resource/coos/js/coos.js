@@ -1729,7 +1729,7 @@ co.resource.images = {
 			co.toUrl(action, data);
 			return;
 		}
-		if (action.indexOf('http') != -1) {
+		if (action.indexOf('http') == 0) {
 			co.toUrl(action, data);
 			return;
 		} else {
@@ -2159,7 +2159,7 @@ String.prototype.replaceAll = function(arg1, arg2) {
 		if (co.isEmpty(path)) {
 			return;
 		}
-		if (path.indexOf('http') >= 0) {
+		if (path.indexOf('http') == 0) {
 			return path;
 		}
 
@@ -2185,7 +2185,7 @@ String.prototype.replaceAll = function(arg1, arg2) {
 		var url = window.location.href;
 		var port = window.location.port;
 		var hostname = window.location.hostname;
-		if (basePath.indexOf('http') >= 0) {
+		if (basePath.indexOf('http') == 0) {
 			action = url.split(basePath)[1];
 		} else {
 			if (port && port != null && port > 0) {
@@ -2206,7 +2206,7 @@ String.prototype.replaceAll = function(arg1, arg2) {
 		var url = window.location.href;
 		var port = window.location.port;
 		var hostname = window.location.hostname;
-		if (basePath.indexOf('http') >= 0) {
+		if (basePath.indexOf('http') == 0) {
 			action = url.split(basePath)[1];
 		} else {
 			if (port && port != null && port > 0) {
