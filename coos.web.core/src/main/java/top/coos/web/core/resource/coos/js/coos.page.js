@@ -3182,6 +3182,12 @@ window.initElementsData = function(layout) {
 	};
 	Element.prototype.getTextValue = function(value) {
 		if (this.textUseSelectData()) {
+
+			if (this.$input && typeof (value) == "undefined") {
+				if (!coos.isEmpty(this.$input.attr('defaultvalue'))) {
+					value = this.$input.attr('defaultvalue');
+				}
+			}
 			var textValue = this.getSelectDataText(value);
 			return this.getFormatTextValue(value, textValue);
 		}
@@ -3202,6 +3208,11 @@ window.initElementsData = function(layout) {
 			} catch (e) {
 				console.log(e);
 				return formatvalue;
+			}
+		}
+		if (this.$input && typeof (value) == "undefined") {
+			if (!coos.isEmpty(this.$input.attr('defaultvalue'))) {
+				return this.$input.attr('defaultvalue');
 			}
 		}
 		return value;
@@ -3616,11 +3627,11 @@ window.initElementsData = function(layout) {
 	})();
 
 	ThisElement.prototype.getValue = function(value) {
-		return co.date.formatDatetime(value);
+		return co.date.formatDatetime(this.getFormatValue(value));
 	};
 
 	ThisElement.prototype.getTextValue = function(value) {
-		return co.date.formatDatetime(value);
+		return co.date.formatDatetime(this.getFormatValue(value));
 	};
 
 	ThisElement.prototype.initInput = function() {
@@ -3644,11 +3655,11 @@ window.initElementsData = function(layout) {
 	})();
 
 	ThisElement.prototype.getValue = function(value) {
-		return co.date.formatDatetime(value);
+		return co.date.formatDatetime(this.getFormatValue(value));
 	};
 
 	ThisElement.prototype.getTextValue = function(value) {
-		return co.date.formatDatetime(value);
+		return co.date.formatDatetime(this.getFormatValue(value));
 	};
 
 	ThisElement.prototype.initInput = function() {
@@ -3673,11 +3684,11 @@ window.initElementsData = function(layout) {
 	})();
 
 	ThisElement.prototype.getValue = function(value) {
-		return co.date.formatDatetime(value);
+		return co.date.formatDatetime(this.getFormatValue(value));
 	};
 
 	ThisElement.prototype.getTextValue = function(value) {
-		return co.date.formatDatetime(value);
+		return co.date.formatDatetime(this.getFormatValue(value));
 	};
 
 	ThisElement.prototype.initInput = function() {
