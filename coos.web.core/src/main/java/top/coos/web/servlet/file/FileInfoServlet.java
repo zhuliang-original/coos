@@ -1,6 +1,5 @@
 package top.coos.web.servlet.file;
 
-import java.io.File;
 import java.io.IOException;
 
 import javax.servlet.ServletException;
@@ -9,10 +8,14 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import top.coos.constant.Constant;
-import top.coos.tool.file.FileTool;
+import net.sf.json.JSONObject;
+import top.coos.Configuration;
+import top.coos.ConfigurationFactory;
+import top.coos.bean.FileEntity;
+import top.coos.tool.string.StringHelper;
 import top.coos.web.core.WebCorePackageInfo;
-import top.coos.web.constant.WebConstant;
+import top.coos.web.service.FileInfoService;
+import top.coos.web.service.FileInfoServiceImpl;
 
 @WebServlet(urlPatterns = WebCorePackageInfo.SERVLET_FOLDER + "/file/file.info")
 public class FileInfoServlet extends HttpServlet {
@@ -32,29 +35,30 @@ public class FileInfoServlet extends HttpServlet {
 		response.setContentType("text/html");
 		String path = request.getParameter("path");
 		String url = request.getParameter("url");
-		if (path != null && !path.trim().equals("")) {
 
-			try {
-				String fileServerFolder = WebConstant.Path.getWebServerPath(request);
-				String file_path = new File(fileServerFolder).getParentFile().getAbsolutePath() + "/"
-						+ Constant.Config.FILE_FOLDER + "/" + path;
-				File file = new File(file_path + ".info");
-				if (file != null && file.isFile()) {
-					response.getOutputStream().write(FileTool.read(file).getBytes());
-					return;
+		Configuration configuration = ConfigurationFactory.get(request);
+		FileInfoService fileInfoService = new FileInfoServiceImpl();
+		if (configuration != null && configuration.service != null) {
+			if (!StringHelper.isEmpty(configuration.service.file_info)) {
+				try {
+					FileInfoService fis = (FileInfoService) Class.forName(configuration.service.file_info)
+							.newInstance();
+					fileInfoService = fis;
+				} catch (Exception e) {
+					e.printStackTrace();
 				}
+			}
+		}
+		FileEntity fileEntity = fileInfoService.readInfo(request, path, url);
 
-			} catch (Exception e) {
-			}
+		if (fileEntity != null) {
+
+			response.getOutputStream().write(JSONObject.fromObject(fileEntity).toString().getBytes());
+			return;
+		} else {
+			response.getOutputStream().write("{}".getBytes());
 		}
-		if (url != null && !url.trim().equals("")) {
-			File file = FileTool.getFile(url + ".info");
-			if (file != null && file.isFile()) {
-				response.getOutputStream().write(FileTool.read(file).getBytes());
-				return;
-			}
-		}
-		response.getOutputStream().write("{}".getBytes());
+
 	}
 
 }

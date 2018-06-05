@@ -88,6 +88,36 @@ public final class Configuration {
 		public List<String> servlet_patterns = new ArrayList<String>();
 	}
 
+	public Service service = new Service();
+
+	public static class Service {
+
+		public String file_upload;
+
+		public String file_info;
+
+		public String getFile_upload() {
+
+			return file_upload;
+		}
+
+		public void setFile_upload(String file_upload) {
+
+			this.file_upload = file_upload;
+		}
+
+		public String getFile_info() {
+
+			return file_info;
+		}
+
+		public void setFile_info(String file_info) {
+
+			this.file_info = file_info;
+		}
+
+	}
+
 	public Server server = new Server();
 
 	public static class Server {

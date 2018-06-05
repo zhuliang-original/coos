@@ -19,6 +19,8 @@ import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
 
+import top.coos.Configuration;
+import top.coos.ConfigurationFactory;
 import top.coos.bean.FileEntity;
 import top.coos.tool.string.StringHelper;
 import top.coos.web.core.WebCorePackageInfo;
@@ -103,7 +105,19 @@ public class FileUploadServlet extends HttpServlet {
 						fileItems.add(item);
 					}
 				}
+				Configuration configuration = ConfigurationFactory.get(request);
 				FileUploadService fileUploadService = new FileUploadServiceImpl();
+				if (configuration != null && configuration.service != null) {
+					if (!StringHelper.isEmpty(configuration.service.file_upload)) {
+						try {
+							FileUploadService fus = (FileUploadService) Class.forName(configuration.service.file_upload)
+									.newInstance();
+							fileUploadService = fus;
+						} catch (Exception e) {
+							e.printStackTrace();
+						}
+					}
+				}
 				list = fileUploadService.upload(request, fileItems);
 				if (list == null || list.size() == 0) {
 					uploadFileResult.setError(-1);
