@@ -38,7 +38,7 @@ public class FileInfoServiceImpl implements FileInfoService {
 		if (content != null) {
 			try {
 				JSONObject object = JSONObject.fromObject(content);
-				fileEntity = EntityTool.getEntity(FileEntity.class, object, false);
+				fileEntity = (FileEntity) EntityTool.getEntity(FileEntity.class, object, false);
 			} catch (Exception e) {
 			}
 		}
