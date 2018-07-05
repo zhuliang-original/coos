@@ -1,7 +1,5 @@
 <%@ page trimDirectiveWhitespaces="true"%><%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%><%@ page import="java.util.*"%><%@ include file="/WEB-INF/views/core/base/base.jsp"%>
 <!DOCTYPE html >
-<!--[if IE 8]><html class="ie ie8" xmlns="http://www.w3.org/1999/xhtml"><![endif]-->
-<!--[if IE 9]><html class="ie ie9" xmlns="http://www.w3.org/1999/xhtml"><![endif]-->
 <head>
 <title>${THIS_PROJECT.name }</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0 , user-scalable=no" />
