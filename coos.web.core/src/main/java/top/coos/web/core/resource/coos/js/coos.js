@@ -5642,7 +5642,7 @@ String.prototype.replaceAll = function(arg1, arg2) {
 		var cannull = element.attr('cannull');
 		cannull = cannull == null || cannull == 'true' || cannull == '1' ? true : false;
 		var ishidden = $element.is(":hidden");
-		var mustvalidate = $element.attr('mustvalidate') != null;
+		var mustvalidate = $element.attr('must-validate') != null;
 		var isreadonly = $element.attr('readonly') != null;
 
 		var valueType = $element.attr('value-type');
@@ -5885,6 +5885,7 @@ String.prototype.replaceAll = function(arg1, arg2) {
 		var name = $selector.attr('name');
 		$selector.before(optionGroup);
 		$selector.hide();
+		$selector.attr('must-validate', true);
 		var options = $selector.parent().find('select.option-select').find('option');
 		options.each(function(index, option) {
 			option = $(option);
@@ -5946,6 +5947,7 @@ String.prototype.replaceAll = function(arg1, arg2) {
 		var name = $selector.attr('name');
 		$selector.before(optionGroup);
 		$selector.hide();
+		$selector.attr('must-validate', true);
 		$selector.removeAttr('name');
 		if (co.isEmpty(name)) {
 			name = "checkbox_" + co.getNumber();
@@ -5990,6 +5992,7 @@ String.prototype.replaceAll = function(arg1, arg2) {
 		co.plugin.load("codemirror", function() {
 			co.plugin.load("emmet", function() {
 				$selector = $($selector);
+				$selector.attr('must-validate', true);
 				var mode = $selector.attr('codemirror-mode');
 				if (co.isEmpty(mode)) {
 					mode = "text/html";
@@ -6339,6 +6342,7 @@ String.prototype.replaceAll = function(arg1, arg2) {
 			id = co.getNumber();
 		}
 		$selector.attr('id', id);
+		$selector.attr('must-validate', true);
 		var editor = null;
 		var inited = false;
 		$selector.change(function() {
@@ -6787,6 +6791,7 @@ String.prototype.replaceAll = function(arg1, arg2) {
 		var name = $selector.attr('name');
 		$selector.before(optionGroup);
 		$selector.hide();
+		$selector.attr('must-validate', true);
 		var options = $selector.parent().find('select.option-select').find('option');
 		options.each(function(index, option) {
 			option = $(option);
@@ -6851,6 +6856,7 @@ String.prototype.replaceAll = function(arg1, arg2) {
 		}
 		$selector.before(optionGroup);
 		$selector.hide();
+		$selector.attr('must-validate', true);
 		$selector.removeAttr('name');
 		var options = $selector.parent().find('select.option-select').find('option');
 		options.each(function(index, option) {
@@ -6986,6 +6992,8 @@ String.prototype.replaceAll = function(arg1, arg2) {
 		var thisvalue = $selector.val();
 		var slider = null;
 		var issliderchange = false;
+
+		$selector.attr('must-validate', true);
 		$selector.change(function() {
 			var value = $selector.val();
 			if (issliderchange) {
@@ -7605,6 +7613,7 @@ String.prototype.replaceAll = function(arg1, arg2) {
 			// element.parent().css('min-height', height);
 			// element.parent().css('min-height', 53);
 			$selector.hide();
+			$selector.attr('must-validate', true);
 			var value = $selector.attr("value");
 			if (co.isEmpty($selector.attr("data-size"))) {
 				// $selector.attr('data-size', 'mini');
@@ -7645,6 +7654,8 @@ String.prototype.replaceAll = function(arg1, arg2) {
 			if (isreadonly) {
 				return;
 			}
+
+			$selector.attr('must-validate', true);
 			$selector.tagsInput({
 				width : 'auto',
 				onAddTag : function(tag) {
@@ -8037,6 +8048,7 @@ String.prototype.replaceAll = function(arg1, arg2) {
 			this.$text.removeAttr('name');
 			this.$selector.after(this.$text);
 			this.$selector.hide();
+			this.$selector.attr('must-validate', true);
 		}
 		if (this._need_create_value_input) {
 			if (this.isInputTag) {
