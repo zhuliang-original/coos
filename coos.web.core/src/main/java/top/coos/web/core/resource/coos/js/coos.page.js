@@ -2883,29 +2883,11 @@ window.initElementsData = function(layout) {
 		if (!co.isEmpty(config.pattern)) {
 			$input.attr('pattern', config.pattern);
 		}
-		if (!co.isEmpty(config.eq)) {
-			$input.attr('eq', config.eq);
+		if (!co.isEmpty(config.validaterule)) {
+			$input.attr('validate-rule', config.validaterule);
 		}
-		if (!co.isEmpty(config.eqto)) {
-			$input.attr('eqto', config.eqto);
-		}
-		if (!co.isEmpty(config.gt)) {
-			$input.attr('gt', config.gt);
-		}
-		if (!co.isEmpty(config.gtto)) {
-			$input.attr('gtto', config.gtto);
-		}
-		if (!co.isEmpty(config.gte)) {
-			$input.attr('gte', config.gte);
-		}
-		if (!co.isEmpty(config.gteto)) {
-			$input.attr('gteto', config.gteto);
-		}
-		if (!co.isEmpty(config.lt)) {
-			$input.attr('lt', config.lt);
-		}
-		if (!co.isEmpty(config.ltto)) {
-			$input.attr('ltto', config.ltto);
+		if (!co.isEmpty(config.validateruleerrmsg)) {
+			$input.attr('validate-rule-errmsg', config.validateruleerrmsg);
 		}
 		if (!co.isEmpty(config.beforeaddon)) {
 			$input.attr('before-addon', config.beforeaddon);
@@ -3440,35 +3422,15 @@ window.initElementsData = function(layout) {
 		text : "正则",
 		name : "pattern"
 	}, {
-		text : "等于",
-		name : "eq"
+		text : "验证规则",
+		name : "validaterule",
+		columnsize: 12,
+		labelsize : 2
 	}, {
-		text : "等于元素",
-		name : "eqto"
-	}, {
-		text : "大于",
-		name : "gt"
-	}, {
-		text : "大于元素",
-		name : "gtto"
-	}, {
-		text : "大于等于",
-		name : "gte"
-	}, {
-		text : "大于等于元素",
-		name : "gteto"
-	}, {
-		text : "小于",
-		name : "lt"
-	}, {
-		text : "小于元素",
-		name : "ltto"
-	}, {
-		text : "小于等于",
-		name : "lte"
-	}, {
-		text : "小于等于元素",
-		name : "lteto"
+		text : "验证错误信息",
+		name : "validateruleerrmsg",
+		columnsize: 12,
+		labelsize : 2
 	} ];
 
 	var tagColumns = [ {
@@ -3539,7 +3501,7 @@ window.initElementsData = function(layout) {
 	})();
 
 	ThisElement.prototype.initInput = function($input) {
-		$input.attr('isinteger', true);
+		$input.attr('value-type', "number");
 	};
 
 	var ThisElementConfig = {
@@ -3561,7 +3523,7 @@ window.initElementsData = function(layout) {
 	})();
 
 	ThisElement.prototype.initInput = function($input) {
-		$input.attr('isphone', true);
+		$input.attr('value-type', "phone");
 	};
 
 	var ThisElementConfig = {
@@ -3583,7 +3545,7 @@ window.initElementsData = function(layout) {
 	})();
 
 	ThisElement.prototype.initInput = function($input) {
-		$input.attr('ismailbox', true);
+		$input.attr('value-type', "mailbox");
 	};
 
 	var ThisElementConfig = {
@@ -4665,6 +4627,7 @@ window.initElementsData = function(layout) {
 		this.config = config;
 		this.execute = config.execute;
 		this.design = config.design;
+		this.value = config.value;
 		this.init(config);
 		jQuery.extend(true, config.execute, this.execute);
 	};
@@ -4690,7 +4653,9 @@ window.initElementsData = function(layout) {
 		for (var index = 0; index < this.execute.datas.length; index++) {
 			var data = this.execute.datas[index];
 			var setvaluename = data.setvaluename;
+
 			var value = this.getDataValue(data);
+
 			if (typeof (value) != "undefined") {
 				if (!coos.isEmpty(setvaluename)) {
 					executeData[setvaluename] = value;
@@ -4740,7 +4705,7 @@ window.initElementsData = function(layout) {
 		return eval('(0,' + funstr + ')')();
 	}
 	Execute.prototype.getDataValue = function(executeData) {
-		var dataConfig = this.config.dataConfig;
+		var dataConfig = this.config.dataConfig || {};
 		var value = executeData.value;
 		if (!co.isEmpty(executeData.layoutid)) {
 			var layoutObjects = getLayoutObject(executeData.layoutid);
@@ -4763,8 +4728,11 @@ window.initElementsData = function(layout) {
 					return null;
 				}
 			}
+		} else {
+			if (co.isEmpty(value)) {
+				return this.value;
+			}
 		}
-
 		return executeFunction(dataConfig, value);
 	};
 	var EXECUTE_STATUS_MAP = {};
@@ -5736,6 +5704,33 @@ window.initElementsData = function(layout) {
 								layoutObject.loadDataAfter && layoutObject.loadDataAfter(layoutObject, resultMap);
 							});
 						}
+
+						if (!co.isEmpty(execute.config.elementids)) {
+							var servicemodelname = "";
+							for ( var name in resultMap) {
+								servicemodelname = name;
+								break;
+							}
+							var result = resultMap[servicemodelname];
+							var elementvaluemapping = [];
+							if (!co.isEmpty(execute.config.elementvaluemapping)) {
+								elementvaluemapping = execute.config.elementvaluemapping.split(',');
+							}
+							$(execute.config.elementids.split(',')).each(function(index, elementid) {
+								if (!co.isEmpty(elementid)) {
+									var $object = $('[elementid="' + elementid + '"]');
+									var name = $object.attr('name');
+									if (index > (elementvaluemapping.length - 1)) {
+									} else {
+										name = elementvaluemapping[index];
+									}
+									var data = result.value;
+									if (!co.isEmpty(data[name])) {
+										$object.val(data[name]).change();
+									}
+								}
+							});
+						}
 						this_.eventChildExecutes();
 					}
 				};
@@ -5797,6 +5792,16 @@ window.initElementsData = function(layout) {
 			name : "layoutids",
 			inputtype : "selects",
 			uselayout : true
+		}, {
+			text : "填充元素",
+			name : "elementids",
+			inputtype : "selects",
+			useelement : true
+		}, {
+			text : "填充元素值映射",
+			name : "elementvaluemapping",
+			columnsize : 12,
+			labelsize : 2
 		} ]
 	};
 	co.page.event.execute.model.defind("SERVICE", ThisExecuteConfig, ThisExecute);
