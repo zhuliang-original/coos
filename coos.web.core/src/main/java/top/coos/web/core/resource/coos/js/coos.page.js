@@ -2796,7 +2796,13 @@ window.initElementsData = function(layout) {
 	};
 
 	Element.prototype.getSelectDatas = function() {
-		return this.element.selectdatas;
+		if (this.element.selectdatas) {
+			return this.element.selectdatas;
+		}
+		if (!co.isEmpty(this.element.selectoptionscachekey)) {
+			return this.config.page.selectoptionscache[this.element.selectoptionscachekey];
+		}
+		return null;
 	};
 	Element.prototype.textUseSelectData = function() {
 		return false;
@@ -3039,7 +3045,7 @@ window.initElementsData = function(layout) {
 
 			}
 			this.initAttribute($input);
-			var datas = this.element.selectdatas;
+			var datas = this.getSelectDatas();
 			if (this.element.config.needwrap) {
 				$input.before("<div class=\"coos-col-12\"></div>");
 			}
