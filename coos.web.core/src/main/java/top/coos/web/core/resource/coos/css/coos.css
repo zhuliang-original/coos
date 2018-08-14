@@ -914,7 +914,7 @@ a {
 .coos-dropdown-menu.coos-has-right-button > li > a {
   padding-right: 50px !important;
 }
-.coos-dropdown-menu > li > a > .coos-button {
+.coos-dropdown-menu > li > a > .coos-btn {
   position: absolute;
   right: 7px;
   top: 2px;
