@@ -36,8 +36,26 @@
 				cachestr = "{}";
 			}
 			var requestmapstr = '${requestmapstr }';
-			var requestmap = eval('(' + requestmapstr + ')');
-			var cache = eval('(' + cachestr + ')');
+			var requestmap = {};
+			try{
+				requestmap = JSON.parse(requestmapstr);
+			}catch(e){
+				try{
+					requestmap = eval('(' + requestmapstr + ')');
+				}catch(e){
+					
+				}
+			}
+			var cache = {};
+			try{
+				cache = JSON.parse(cachestr);
+			}catch(e){
+				try{
+					cache = eval('(' + cachestr + ')');
+				}catch(e){
+					
+				}
+			}
 			var $pageContent = $('.coos-page-' + pageid);
 			var config = {
 				pageid : pageid,
