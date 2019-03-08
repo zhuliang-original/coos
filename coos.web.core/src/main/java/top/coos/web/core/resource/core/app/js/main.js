@@ -66,4 +66,7 @@
 		}, false);
 	}
 	loadAppResource();
+	if(THIS_PROJECT && !coos.isEmpty(THIS_PROJECT.title)){
+		coos.setTitle(THIS_PROJECT.title)
+	}
 })();
