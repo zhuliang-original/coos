@@ -9,13 +9,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sf.json.JSONObject;
-import top.coos.Configuration;
-import top.coos.ConfigurationFactory;
-import top.coos.bean.FileEntity;
-import top.coos.tool.string.StringHelper;
 import top.coos.web.core.WebCorePackageInfo;
-import top.coos.web.service.FileInfoService;
-import top.coos.web.service.FileInfoServiceImpl;
+import top.coos.web.servlet.file.bean.FileBean;
+import top.coos.web.servlet.file.ifaces.IFileInfo;
+import top.coos.web.servlet.file.ifaces.impl.FileInfoImpl;
 
 @WebServlet(urlPatterns = WebCorePackageInfo.SERVLET_FOLDER + "/file/file.info")
 public class FileInfoServlet extends HttpServlet {
@@ -32,31 +29,30 @@ public class FileInfoServlet extends HttpServlet {
 		// 将请求，响应的编码设置为UTF-8(防止乱码)
 		request.setCharacterEncoding("UTF-8");
 		response.setCharacterEncoding("UTF-8");
-		response.setContentType("text/html");
+		response.setContentType("application/json");
 		String path = request.getParameter("path");
-		String url = request.getParameter("url");
 
-		Configuration configuration = ConfigurationFactory.get(request);
-		FileInfoService fileInfoService = new FileInfoServiceImpl();
-		if (configuration != null && configuration.service != null) {
-			if (!StringHelper.isEmpty(configuration.service.file_info)) {
-				try {
-					FileInfoService fis = (FileInfoService) Class.forName(configuration.service.file_info)
-							.newInstance();
-					fileInfoService = fis;
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		}
-		FileEntity fileEntity = fileInfoService.readInfo(request, path, url);
+		IFileInfo iFileInfo = new FileInfoImpl();
+		// if (configuration != null && configuration.getFile() != null) {
+		// if (!StringUtil.isEmpty(configuration.getFile().getInfo_service())) {
+		// try {
+		// IFileInfo fis = (IFileInfo)
+		// Class.forName(configuration.getFile().getInfo_service()).newInstance();
+		// iFileInfo = fis;
+		// } catch (Exception e) {
+		// e.printStackTrace();
+		// }
+		// }
+		// }
+		FileBean fileBean = iFileInfo.get(request, path);
 
-		if (fileEntity != null) {
-
-			response.getOutputStream().write(JSONObject.fromObject(fileEntity).toString().getBytes());
+		if (fileBean != null) {
+			response.getOutputStream().write(JSONObject.fromObject(fileBean).toString().getBytes("UTF-8"));
+			response.getOutputStream().flush();
 			return;
 		} else {
 			response.getOutputStream().write("{}".getBytes());
+			response.getOutputStream().flush();
 		}
 
 	}

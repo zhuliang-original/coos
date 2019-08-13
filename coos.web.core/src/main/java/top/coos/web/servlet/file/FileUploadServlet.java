@@ -18,14 +18,13 @@ import net.sf.json.JSONObject;
 import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
+import org.apache.commons.lang.StringUtils;
 
-import top.coos.Configuration;
-import top.coos.ConfigurationFactory;
-import top.coos.bean.FileEntity;
-import top.coos.tool.string.StringHelper;
+import top.coos.web.constant.WebConstant;
 import top.coos.web.core.WebCorePackageInfo;
-import top.coos.web.service.FileUploadService;
-import top.coos.web.service.FileUploadServiceImpl;
+import top.coos.web.servlet.file.bean.FileBean;
+import top.coos.web.servlet.file.ifaces.IFileUpload;
+import top.coos.web.servlet.file.ifaces.impl.FileUploadImpl;
 
 @WebServlet(urlPatterns = WebCorePackageInfo.SERVLET_FOLDER + "/file/file.upload")
 public class FileUploadServlet extends HttpServlet {
@@ -45,16 +44,28 @@ public class FileUploadServlet extends HttpServlet {
 		PrintWriter printWriter = response.getWriter();
 		String uploadid = request.getParameter("uploadid");
 		UploadProgress progressListener = new UploadProgress();
-		if (!StringHelper.isEmpty(uploadid)
+		if (!StringUtils.isEmpty(uploadid)
 				&& request.getSession().getAttribute("file-upload-progress-listener-" + uploadid) != null) {
-			progressListener = (UploadProgress) request.getSession().getAttribute(
-					"file-upload-progress-listener-" + uploadid);
+			progressListener = (UploadProgress) request.getSession()
+					.getAttribute("file-upload-progress-listener-" + uploadid);
 		}
 		request.getSession().setAttribute("file-upload-progress-listener-" + uploadid, progressListener);
 		response.setContentType("text/html");
+		String domain = request.getParameter("domain");
+		if (!StringUtils.isEmpty(domain)) {
+			response.setHeader("Access-Control-Allow-Origin", domain);
+		}
 		try {
 			UploadFileResult uploadFileResult = this.doUploadFile(request, response, progressListener);
-			printWriter.print(JSONObject.fromObject(uploadFileResult));
+			JSONObject json = new JSONObject();
+			if (request.getParameter("ckeditor") != null) {
+				json.put("uploaded", true);
+				json.put("url", uploadFileResult.getPath());
+				json.put("name", uploadFileResult.getName());
+			} else {
+				json = (JSONObject) JSONObject.fromObject(uploadFileResult);
+			}
+			printWriter.print(json.toString());
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
@@ -66,14 +77,14 @@ public class FileUploadServlet extends HttpServlet {
 	public UploadFileResult doUploadFile(HttpServletRequest request, HttpServletResponse response,
 			UploadProgress progressListener) {
 
-		List<FileEntity> list = new ArrayList<FileEntity>();
+		List<FileBean> list = new ArrayList<FileBean>();
 		UploadFileResult uploadFileResult = new UploadFileResult();
 		uploadFileResult.setCode(0);
 		try {
 			// 构造一个文件上传处理对象
 			DiskFileItemFactory factory = new DiskFileItemFactory();
 			ServletFileUpload upload = new ServletFileUpload(factory);
-			String tempPath = this.getClass().getClassLoader().getResource("/").getPath().replace("WEB-INF/classes/", "");
+			String tempPath = WebConstant.Path.getWebServerPath(request);
 			tempPath = tempPath + "upload/tmp/";
 			File fp1 = new File(tempPath);
 			if (!fp1.exists())
@@ -89,7 +100,7 @@ public class FileUploadServlet extends HttpServlet {
 				int length = request.getContentLength();
 
 				String maxfilelength = request.getParameter("maxfilelength");
-				if (!StringHelper.isEmpty(maxfilelength)) {
+				if (!StringUtils.isEmpty(maxfilelength)) {
 					int maxlength = (int) (Double.valueOf(maxfilelength) * 1024 * 1024);
 					if (length > maxlength) {
 						uploadFileResult.setCode(-1);
@@ -105,19 +116,22 @@ public class FileUploadServlet extends HttpServlet {
 						fileItems.add(item);
 					}
 				}
-				Configuration configuration = ConfigurationFactory.get(request);
-				FileUploadService fileUploadService = new FileUploadServiceImpl();
-				if (configuration != null && configuration.service != null) {
-					if (!StringHelper.isEmpty(configuration.service.file_upload)) {
-						try {
-							FileUploadService fus = (FileUploadService) Class.forName(configuration.service.file_upload)
-									.newInstance();
-							fileUploadService = fus;
-						} catch (Exception e) {
-							e.printStackTrace();
-						}
-					}
-				}
+				IFileUpload fileUploadService = new FileUploadImpl();
+				// if (configuration != null && configuration.getFile() != null)
+				// {
+				// if
+				// (!StringUtil.isEmpty(configuration.getFile().getUpload_service()))
+				// {
+				// try {
+				// IFileUpload fus = (IFileUpload)
+				// Class.forName(configuration.getFile().getUpload_service())
+				// .newInstance();
+				// fileUploadService = fus;
+				// } catch (Exception e) {
+				// e.printStackTrace();
+				// }
+				// }
+				// }
 				list = fileUploadService.upload(request, fileItems);
 				if (list == null || list.size() == 0) {
 					uploadFileResult.setError(-1);
@@ -126,6 +140,7 @@ public class FileUploadServlet extends HttpServlet {
 					uploadFileResult.setError(0);
 					uploadFileResult.setUrl(list.get(0).getUrl());
 					uploadFileResult.setPath(list.get(0).getPath());
+					uploadFileResult.setName(list.get(0).getName());
 				}
 			}
 		} catch (Exception e) {

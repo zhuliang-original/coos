@@ -5,6 +5,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.lang.StringUtils;
+
 import top.coos.config.DevServerConfig;
 import top.coos.constant.Constant;
 import top.coos.tool.entity.EntityTool;
@@ -137,6 +139,19 @@ public final class Configuration {
 		public String open_file_server_url = "http://file.coos.top/" + Constant.Config.FILE_FOLDER;
 
 		public String open_upload_file_server_url = "http://file.coos.top/";
+
+		public String local_folder = "/coos/file/";
+
+		public String getLocal_folder() {
+			if (StringUtils.isEmpty(local_folder)) {
+				local_folder = "/coos/file/";
+			}
+			return local_folder;
+		}
+
+		public void setLocal_folder(String local_folder) {
+			this.local_folder = local_folder;
+		}
 
 		public String getThis_server_url() {
 

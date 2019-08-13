@@ -2,67 +2,92 @@ package top.coos.web.servlet.file;
 
 import java.util.List;
 
-import top.coos.bean.FileEntity;
+import top.coos.web.servlet.file.bean.FileBean;
 
 public class UploadFileResult {
-    private int code;
 
-    private int error;
+	private int code;
 
-    private String message;
+	private int error;
 
-    private String url;
+	private String message;
 
-    private String path;
+	private String url;
 
-    private List<FileEntity> value;
+	private String name;
 
-    public String getPath() {
-        return path;
-    }
+	private String path;
 
-    public void setPath(String path) {
-        this.path = path;
-    }
+	private List<FileBean> value;
 
-    public int getError() {
-        return error;
-    }
+	public String getName() {
 
-    public void setError(int error) {
-        this.error = error;
-    }
+		return name;
+	}
 
-    public String getUrl() {
-        return url;
-    }
+	public void setName(String name) {
 
-    public void setUrl(String url) {
-        this.url = url;
-    }
+		this.name = name;
+	}
 
-    public int getCode() {
-        return code;
-    }
+	public String getPath() {
 
-    public void setCode(int code) {
-        this.code = code;
-    }
+		return path;
+	}
 
-    public String getMessage() {
-        return message;
-    }
+	public void setPath(String path) {
 
-    public void setMessage(String message) {
-        this.message = message;
-    }
+		this.path = path;
+	}
 
-    public List<FileEntity> getValue() {
-        return value;
-    }
+	public int getError() {
 
-    public void setValue(List<FileEntity> value) {
-        this.value = value;
-    }
+		return error;
+	}
+
+	public void setError(int error) {
+
+		this.error = error;
+	}
+
+	public String getUrl() {
+
+		return url;
+	}
+
+	public void setUrl(String url) {
+
+		this.url = url;
+	}
+
+	public int getCode() {
+
+		return code;
+	}
+
+	public void setCode(int code) {
+
+		this.code = code;
+	}
+
+	public String getMessage() {
+
+		return message;
+	}
+
+	public void setMessage(String message) {
+
+		this.message = message;
+	}
+
+	public List<FileBean> getValue() {
+
+		return value;
+	}
+
+	public void setValue(List<FileBean> value) {
+
+		this.value = value;
+	}
 
 }
